@@ -22,17 +22,7 @@ import java.util.Map;
 public class HelloController {
 
     @PostMapping("/hello")
-    public Map<String,String> get(@RequestBody @Valid PostCreate params, BindingResult result){
-        if(result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            FieldError firstFieldError = fieldErrors.get(0);
-            String fieldName = firstFieldError.getField();
-            String defaultMessage = firstFieldError.getDefaultMessage();
-
-            Map<String,String> error = new HashMap<>();
-            error.put(fieldName,defaultMessage);
-            return error;
-        }
+    public Map<String,String> get(@RequestBody @Valid PostCreate params){
         return Map.of();
     }
 }
