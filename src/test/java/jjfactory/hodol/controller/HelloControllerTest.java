@@ -53,7 +53,7 @@ class HelloControllerTest {
                                 "    \"content\" : \"내용\"\n" +
                                 "}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Y"))
+                .andExpect(jsonPath("$.title").value("제목을 입력해주세요"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
