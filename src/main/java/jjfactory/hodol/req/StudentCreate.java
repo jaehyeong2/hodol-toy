@@ -1,6 +1,6 @@
 package jjfactory.hodol.req;
 
-import jjfactory.hodol.domain.User;
+import jjfactory.hodol.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserCreate {
+public class StudentCreate {
     private String name;
     private String username;
 
-    public UserCreate(User user) {
-        this.name = user.getName();
-        this.username = user.getUsername();
+    public StudentCreate(Student student) {
+        this.name = student.getName();
+        this.username = student.getUsername();
     }
 }

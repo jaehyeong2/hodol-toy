@@ -1,7 +1,7 @@
 package jjfactory.hodol.service;
 
-import jjfactory.hodol.repository.PostRepository;
-import jjfactory.hodol.req.PostCreate;
+import jjfactory.hodol.repository.AssignmentRepository;
+import jjfactory.hodol.req.SubjectCreate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,28 +10,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
-class PostServiceTest {
+class AssignmentServiceTest {
 
     @Autowired
-    PostService postService;
+    AssignmentService assignmentService;
 
     @Autowired
-    PostRepository postRepository;
+    AssignmentRepository assignmentRepository;
 
     @Test
     void write() {
 
-        PostCreate dto = new PostCreate("제목", "내용");
-        PostCreate dto2 = new PostCreate("제목", "내용");
+        SubjectCreate dto = new SubjectCreate("제목", "내용");
+        SubjectCreate dto2 = new SubjectCreate("제목", "내용");
 
-        postService.write(dto);
-        postService.write(dto2);
+        assignmentService.write(dto);
+        assignmentService.write(dto2);
 
-        Assertions.assertThat(postRepository.count()).isEqualTo(2L);
+        Assertions.assertThat(assignmentRepository.count()).isEqualTo(2L);
     }
 }

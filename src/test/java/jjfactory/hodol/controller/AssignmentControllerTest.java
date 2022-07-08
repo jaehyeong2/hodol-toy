@@ -1,19 +1,17 @@
 package jjfactory.hodol.controller;
 
-import jjfactory.hodol.domain.Post;
-import jjfactory.hodol.repository.PostRepository;
+import jjfactory.hodol.domain.Assignment;
+import jjfactory.hodol.repository.AssignmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,18 +24,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-class HelloControllerTest {
+class AssignmentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    PostRepository postRepository;
+    AssignmentRepository assignmentRepository;
 
 
     @BeforeEach
     void clean(){
-        postRepository.deleteAll();
+        assignmentRepository.deleteAll();
     }
 
     @Test
@@ -63,9 +61,9 @@ class HelloControllerTest {
 //                .andExpect(content().string("Y"))
                 .andDo(MockMvcResultHandlers.print());
 
-        Post post = postRepository.findAll().get(0);
-        assertEquals(post.getContent(),"content");
-        assertEquals(post.getTitle(),"title");
+        Assignment assignment = assignmentRepository.findAll().get(0);
+        assertEquals(assignment.getContent(),"content");
+        assertEquals(assignment.getTitle(),"title");
     }
 
     @Test

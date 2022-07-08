@@ -1,7 +1,6 @@
 package jjfactory.hodol.controller;
 
-import jjfactory.hodol.req.UserCreate;
-import jjfactory.hodol.service.UserService;
+import jjfactory.hodol.req.StudentCreate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ public class UserController {
 //    private final UserService userService;
 
     @PostMapping("")
-    public void create(@RequestBody UserCreate userCreate){
+    public void create(@RequestBody StudentCreate studentCreate){
 
 //        userService.userCreate(userCreate);
     }
