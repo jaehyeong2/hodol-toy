@@ -1,12 +1,14 @@
 package jjfactory.hodol.req;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
