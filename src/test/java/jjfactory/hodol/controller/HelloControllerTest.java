@@ -1,5 +1,8 @@
 package jjfactory.hodol.controller;
 
+import jjfactory.hodol.domain.Post;
+import jjfactory.hodol.repository.PostRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,15 @@ class HelloControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    PostRepository postRepository;
+
+
+    @BeforeEach
+    void clean(){
+        postRepository.deleteAll();
+    }
+
     @Test
     @DisplayName("컨트롤러 get")
     void get() throws Exception {
@@ -37,22 +49,27 @@ class HelloControllerTest {
     }
 
     @Test
-    @DisplayName("컨트롤러 post")
+    @DisplayName("컨트롤러 post success")
     void post() throws Exception {
         //expected
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
-                                "    \"title\" : \"제목\",\n" +
-                                "    \"content\" : \"내용\"\n" +
+                                "    \"title\" : \"title\",\n" +
+                                "    \"content\" : \"content\"\n" +
                                 "}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Y"))
+                .andExpect(jsonPath("$.data").value("Y"))
+//                .andExpect(content().string("Y"))
                 .andDo(MockMvcResultHandlers.print());
+
+        Post post = postRepository.findAll().get(0);
+        assertEquals(post.getContent(),"content");
+        assertEquals(post.getTitle(),"title");
     }
 
     @Test
-    @DisplayName("컨트롤러 post. title 값 필수")
+    @DisplayName("컨트롤러 post failed. title 값 필수")
     void post2() throws Exception {
         //expected
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
@@ -66,7 +83,6 @@ class HelloControllerTest {
                 .andExpect(jsonPath("$.validation.title").value("제목을 입력해주세요"))
                 .andDo(MockMvcResultHandlers.print());
     }
-
 
 
 }

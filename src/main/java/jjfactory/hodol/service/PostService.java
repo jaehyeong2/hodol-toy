@@ -14,8 +14,9 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void write(PostCreate dto){
+    public String write(PostCreate dto){
         Post post = new Post(dto.getTitle(), dto.getContent());
         postRepository.save(post);
+        return "Y";
     }
 }
