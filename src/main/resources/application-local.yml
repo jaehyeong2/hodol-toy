@@ -1,4 +1,10 @@
 spring:
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+        default-page-size: 15
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/hodol?serverTimezone=Asia/Seoul

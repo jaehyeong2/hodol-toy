@@ -4,19 +4,21 @@ import jjfactory.hodol.domain.Assignment;
 import jjfactory.hodol.repository.AssignmentRepository;
 import jjfactory.hodol.req.SubjectCreate;
 import jjfactory.hodol.res.AssignmentRes;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.util.IllformedLocaleException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -74,6 +76,48 @@ class AssignmentServiceTest {
         //then
         assertThat(result.getContent()).isEqualTo("내용");
         assertThat(result.getTitle()).isEqualTo("제목제목!");
+
+    }
+
+    @Test
+    @DisplayName("findAll 노 페이징")
+    void getList() {
+        //given
+        List<Assignment> assignments = IntStream.range(1,31)
+                .mapToObj(i -> Assignment.builder()
+                        .content("내용" + i)
+                        .title("제목" + i)
+                        .build()).collect(Collectors.toList());
+        assignmentRepository.saveAll(assignments);
+
+        Pageable pageable = PageRequest.of(0,10);
+
+        //when
+        List<AssignmentRes> result = assignmentService.getList(pageable);
+        assertThat(result.size()).isEqualTo(10);
+
+    }
+
+    @Test
+    @DisplayName("getList 1페이지 조회")
+    void getListPaging() {
+        //given
+        List<Assignment> assignments = IntStream.range(1,31)
+                .mapToObj(i -> Assignment.builder()
+                        .content("내용" + i)
+                        .title("제목" + i)
+                        .build()).collect(Collectors.toList());
+
+
+        assignmentRepository.saveAll(assignments);
+
+        Pageable pageable = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"id"));
+
+        //when
+        List<AssignmentRes> result = assignmentService.getList(pageable);
+        assertThat(result.size()).isEqualTo(10);
+        assertThat(result.get(0).getTitle()).isEqualTo("제목30");
+        assertThat(result.get(9).getTitle()).isEqualTo("제목21");
 
     }
 }

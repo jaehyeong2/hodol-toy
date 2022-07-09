@@ -6,7 +6,11 @@ import jjfactory.hodol.req.SubjectCreate;
 import jjfactory.hodol.res.AssignmentRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,6 +25,12 @@ public class AssignmentService {
         });
 
         return new AssignmentRes(assignment);
+    }
+
+    public List<AssignmentRes> getList(Pageable pageable){
+        List<AssignmentRes> resList = assignmentRepository.findAll(pageable)
+                .stream().map(AssignmentRes::new).collect(Collectors.toList());
+        return resList;
     }
 
     public String write(SubjectCreate dto){

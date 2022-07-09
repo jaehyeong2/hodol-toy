@@ -6,9 +6,11 @@ import jjfactory.hodol.res.AssignmentRes;
 import jjfactory.hodol.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,6 +22,11 @@ public class AssignmentController {
     @GetMapping("/{assignmentId}")
     public ApiRes<AssignmentRes> get(@PathVariable Long assignmentId){
         return new ApiRes<>(assignmentService.get(assignmentId));
+    }
+
+    @GetMapping("")
+    public ApiRes<List<AssignmentRes>> getList(Pageable pageable){
+        return new ApiRes<>(assignmentService.getList(pageable));
     }
 
     @PostMapping("")
