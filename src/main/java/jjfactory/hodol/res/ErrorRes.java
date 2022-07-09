@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-@RequiredArgsConstructor
 public class ErrorRes {
     private final String code;
     private final String message;
