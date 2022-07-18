@@ -1,6 +1,7 @@
 package jjfactory.hodol.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +19,8 @@ public class Teacher {
 
     private String name;
 
+    @Builder
+    public Teacher(String name) {
+        this.name = name;
+    }
 }
